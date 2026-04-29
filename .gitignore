@@ -1,0 +1,28 @@
+# Build outputs
+build*/
+debug/
+release/
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Qt Creator local files
+*.pro.user
+*.pro.user.*
+.qmake.stash
+Makefile
+
+# Generated experiment files
+mnist_binary_3_8.csv
+resultados_cpp.txt
+pesos_cpp.csv
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Notebook checkpoints
+.ipynb_checkpoints/
