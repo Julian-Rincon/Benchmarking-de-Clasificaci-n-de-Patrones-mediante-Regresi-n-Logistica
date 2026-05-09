@@ -31,10 +31,13 @@ Tambien se incluye un notebook de apoyo y un informe tecnico con la documentacio
 | Eigen | 3.4+ |
 | Python | 3.10+ |
 
+Este repositorio tambien incluye soporte CMake y una copia local de Eigen en
+`third_party/eigen` para compilar sin configurar rutas globales.
+
 Dependencias de Python para generar el CSV:
 
 ```bash
-pip install scikit-learn numpy pandas
+pip install -r requirements.txt
 ```
 
 ## Instalacion de Eigen
@@ -59,13 +62,13 @@ brew install eigen
 Desde la raiz del proyecto:
 
 ```bash
-python export_csv.py
+python scripts/export_csv.py
 ```
 
 Este comando descarga MNIST desde OpenML y genera:
 
 ```text
-mnist_binary_3_8.csv
+data/mnist_binary_3_8.csv
 ```
 
 Si se ejecuta desde Qt Creator, copiar el CSV al directorio de build donde queda el ejecutable.
@@ -78,19 +81,42 @@ Si se ejecuta desde Qt Creator, copiar el CSV al directorio de build donde queda
 
 ### 3. Compilar por linea de comandos
 
+En Windows, la forma mas simple es:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/build_and_run_cpp.ps1
+```
+
+El binario generado con CMake se enlaza estaticamente con el runtime de MinGW,
+por lo que no requiere copiar `libstdc++-6.dll` al directorio de ejecucion.
+
+Con CMake y MinGW/GCC:
+
+```bash
+cmake -S . -B build
+cmake --build build --config Release
+./build/logistic_regression_eigen data/mnist_binary_3_8.csv
+```
+
+Con qmake:
+
 ```bash
 qmake logistic_regression.pro
 make -j4
-./logistic_regression_eigen mnist_binary_3_8.csv
+./logistic_regression_eigen data/mnist_binary_3_8.csv
 ```
 
 En Windows, el binario generado puede quedar como `logistic_regression_eigen.exe`.
 
 ## Salida esperada
 
+Los valores exactos pueden cambiar ligeramente segun compilador, CPU y version de las
+dependencias. El notebook ya valida el baseline Python y lee automaticamente
+`results/resultados_cpp.txt` cuando el binario C++ lo genera.
+
 ```text
 [1/5] Cargando dataset...
-      Muestras: 13782 | Caracteristicas: 784
+      Muestras: 13966 | Caracteristicas: 784
 [2/5] Dividiendo datos (80/20 estratificado)...
 [3/5] Normalizando datos (StandardScaler)...
 [4/5] Entrenando Regresion Logistica con Eigen...
@@ -103,30 +129,55 @@ En Windows, el binario generado puede quedar como `logistic_regression_eigen.exe
 ====================================================
   METRICAS - C++ (Eigen) Logistic Regression
 ====================================================
-  Accuracy   : 96.81 %
-  Precision  : 97.02 %
-  Recall     : 96.44 %
-  F1-Score   : 96.73 %
+  Accuracy   : 96.60 %
+  Precision  : 96.01 %
+  Recall     : 97.07 %
+  F1-Score   : 96.54 %
+```
+
+Baseline Python verificado con `data/mnist_binary_3_8.csv`:
+
+```text
+Accuracy  : 96.24 %
+Precision : 96.46 %
+Recall    : 95.82 %
+F1-Score  : 96.14 %
 ```
 
 ## Archivos generados
 
 | Archivo | Contenido |
 | --- | --- |
-| `mnist_binary_3_8.csv` | Dataset MNIST filtrado para digitos 3 y 8 |
-| `resultados_cpp.txt` | Metricas del experimento |
-| `pesos_cpp.csv` | Pesos aprendidos por el modelo |
+| `data/mnist_binary_3_8.csv` | Dataset MNIST filtrado para digitos 3 y 8 |
+| `results/resultados_cpp.txt` | Metricas del experimento |
+| `results/pesos_cpp.csv` | Pesos aprendidos por el modelo |
+| `results/figures/*.png` | Graficas generadas por el notebook |
 
 ## Estructura del repositorio
 
 ```text
 .
 ├── README.md
+├── CMakeLists.txt
 ├── logistic_regression.pro
-├── main.cpp
-├── export_csv.py
-├── Proyecto_Redes_Neuronales_MNIST.ipynb
-└── Informe_Tecnico_Redes_Neuronales.docx
+├── src/
+│   └── main.cpp
+├── scripts/
+│   ├── export_csv.py
+│   └── build_and_run_cpp.ps1
+├── notebooks/
+│   └── Proyecto_Redes_Neuronales_MNIST.ipynb
+├── docs/
+│   ├── Informe_Tecnico_Redes_Neuronales.docx
+│   └── metricas_finales.md
+├── data/
+│   └── mnist_binary_3_8.csv
+├── results/
+│   ├── resultados_cpp.txt
+│   ├── pesos_cpp.csv
+│   └── figures/
+└── third_party/
+    └── eigen/
 ```
 
 ## Componentes principales

@@ -21,9 +21,11 @@ CONFIG   -= app_bundle
 
 # --- Windows (ajustar el path según instalación) ---
 win32: INCLUDEPATH += C:/eigen-3.4.0
+win32: INCLUDEPATH += $$PWD/third_party/eigen
 
 # --- Linux / macOS ---
 unix:  INCLUDEPATH += /usr/include/eigen3
+unix:  INCLUDEPATH += $$PWD/third_party/eigen
 
 # ---------------------------------------------------------------
 # Flags de optimización
@@ -34,7 +36,7 @@ QMAKE_CXXFLAGS += -O2 -march=native -ffast-math
 # Fuentes del proyecto
 # ---------------------------------------------------------------
 SOURCES += \
-    main.cpp
+    src/main.cpp
 
 HEADERS +=
 
@@ -43,4 +45,4 @@ HEADERS +=
 # ---------------------------------------------------------------
 DISTFILES += \
     README.md \
-    mnist_binary_3_8.csv
+    data/mnist_binary_3_8.csv

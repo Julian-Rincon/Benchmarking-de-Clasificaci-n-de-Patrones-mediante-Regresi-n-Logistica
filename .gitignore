@@ -16,13 +16,24 @@ release/
 Makefile
 
 # Generated experiment files
-mnist_binary_3_8.csv
-resultados_cpp.txt
-pesos_cpp.csv
+data/
+results/
+notebooks/*executed*.ipynb
+*.png
+*.bak.docx
+*.tmp.docx
+~$*.docx
 
 # Python cache
 __pycache__/
 *.py[cod]
+data/.sklearn_data/
+.ipython/
 
 # Notebook checkpoints
 .ipynb_checkpoints/
+
+# Vendored dependencies
+!third_party/
+!third_party/eigen/
+!third_party/eigen/**
