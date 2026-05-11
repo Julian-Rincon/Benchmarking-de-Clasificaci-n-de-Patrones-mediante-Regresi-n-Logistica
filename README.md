@@ -118,13 +118,15 @@ dependencias. El notebook ya valida el baseline Python y lee automaticamente
 [1/5] Cargando dataset...
       Muestras: 13966 | Caracteristicas: 784
 [2/5] Dividiendo datos (80/20 estratificado)...
+      Train: 11173 | Test: 2793
+
 [3/5] Normalizando datos (StandardScaler)...
 [4/5] Entrenando Regresion Logistica con Eigen...
       Hiperparametros: lr=0.1, epochs=500, lambda=0.001
-  Epoch    0 | Loss: 0.693147
-  Epoch   50 | Loss: 0.198342
+  Epoch    0 | Loss: 0.756172
+  Epoch   50 | Loss: 0.116411
   ...
-  Epoch  499 | Loss: 0.089201
+  Epoch  499 | Loss: 0.085635
 
 ====================================================
   METRICAS - C++ (Eigen) Logistic Regression
@@ -133,6 +135,7 @@ dependencias. El notebook ya valida el baseline Python y lee automaticamente
   Precision  : 96.01 %
   Recall     : 97.07 %
   F1-Score   : 96.54 %
+  Tiempo entrenamiento: 1.8262 segundos
 ```
 
 Baseline Python verificado con `data/mnist_binary_3_8.csv`:

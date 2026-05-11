@@ -42,7 +42,7 @@ Sobre `data/mnist_binary_3_8.csv`, con split estratificado 80/20 y `random_state
 Train: 11,172
 Test: 2,794
 Iteraciones: 90
-Tiempo entrenamiento: ~0.43 s
+Tiempo entrenamiento promedio: ~0.54 s
 Accuracy: 96.24 %
 Precision: 96.46 %
 Recall: 95.82 %
@@ -90,7 +90,7 @@ Resultado C++ verificado con `data/mnist_binary_3_8.csv`:
 ```text
 Train: 11,173
 Test: 2,793
-Tiempo entrenamiento: ~1.35 s
+Tiempo entrenamiento: ~1.83 s
 Accuracy: 96.60 %
 Precision: 96.01 %
 Recall: 97.07 %
